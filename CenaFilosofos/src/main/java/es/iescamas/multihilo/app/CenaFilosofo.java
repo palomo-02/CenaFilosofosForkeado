@@ -30,14 +30,20 @@ public final class CenaFilosofo {
         Thread utilidad = new Thread( new Utilidad(monitor), "Consola-Tabla");
         utilidad.start();
 
+     // Crear y lanzar los hilos de los filósofos
         for (int i = 0; i < N; i++) {
             final Filosofo f = new Filosofo(i, monitor);
             final Thread t = new Thread(f, "Filosofo-" + i);
 
-            // Opcional: prioridad para trabajar el criterio g)
-            // t.setPriority(Thread.NORM_PRIORITY + (i % 2));
+           
+            if (i % 2 == 0) {
+                t.setPriority(Thread.MAX_PRIORITY);
+            } else {
+                t.setPriority(Thread.MIN_PRIORITY);
+            }
+            // ------------------------------------------
 
-            t.start(); // el hilo pasa de NEW a RUNNABLE
+            t.start(); // El hilo pasa de NEW a RUNNABLE
         }
     }
 }
